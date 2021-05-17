@@ -1,12 +1,25 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-# Create your views here.
+
+communication_packages = [
+    {'package_name': 'triple',
+     'package_price': '159',
+     'package_duration': 'year'},
+    {'package_name': 'tv_only',
+     'package_price': '79',
+     'package_duration': 'year'},
+    {'package_name': 'internet_only',
+     'package_price': '99',
+     'package_duration': 'year'},
+]
 
 
 def home(request):
-    return HttpResponse('<h1>Communication LTD</h1>')
+    context = {
+        'packages': communication_packages,
+        'title': 'Home page'
+    }
+    return render(request, 'my_app/index.html', context)
 
 
 def about(request):
-    return HttpResponse('<h1>About</h1>')
-
+    return render(request, 'my_app/about.html', context={'title': 'About page'})
