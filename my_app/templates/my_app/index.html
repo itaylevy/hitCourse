@@ -1,8 +1,17 @@
 {% extends "my_app/base_page.html" %}
 {% block content %}
+{% if user.is_authenticated %}
     {% for package in packages %}
-    <h1>{{package.package_name}}</h1>
-    <p>Price: {{package.package_price}}</p>
-    <p>Duration: {{package.package_duration}}</p>
+        <h1>{{package.package_name}}</h1>
+        <p>Price: {{package.package_price}}</p>
+        <p>Duration: {{package.package_duration}}</p>
     {% endfor %}
+{% else %}
+        <div class="border-top pt-2">
+            <small>
+                <a href="{% url 'login' %}">Log In</a>
+            </small>
+        </div>
+
+{% endif %}
 {% endblock content %}
