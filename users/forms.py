@@ -21,6 +21,8 @@ class UserUpdateForm(forms.ModelForm):
 
 
 class ProfileUpdateForm(forms.ModelForm):
+    password = forms.PasswordInput()
+
     class Meta:
         model = Profile
         exclude = ['image']
