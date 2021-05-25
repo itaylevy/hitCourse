@@ -1,7 +1,10 @@
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 def register(request):
@@ -10,8 +13,8 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            messages.success(request, f'Your account has been created, You are now able to Login!')
-            return redirect('login')
+            messages.success(request, f'username, Your account has been created, You are now able to Login!')
+            return redirect('app-home')
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
@@ -38,3 +41,10 @@ def profile(request):
         'p_form': p_form
     }
     return render(request, 'users/profile.html', context)
+
+
+class LoginFormView(SuccessMessageMixin, LoginView):
+    template_name = 'users/login.html'
+    success_url = '/profile'
+    user_name = User.get_username()
+    success_message = "{user_name} You were successfully logged in".format(user_name=user_name)

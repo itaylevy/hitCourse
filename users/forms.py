@@ -26,3 +26,6 @@ class ProfileUpdateForm(forms.ModelForm):
         model = Profile
         exclude = ['image']
 
+
+
+
