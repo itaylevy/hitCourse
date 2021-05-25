@@ -46,5 +46,4 @@ def profile(request):
 class LoginFormView(SuccessMessageMixin, LoginView):
     template_name = 'users/login.html'
     success_url = '/profile'
-    user_name = User.get_username()
-    success_message = "{user_name} You were successfully logged in".format(user_name=user_name)
+    success_message = "You were successfully logged in"
