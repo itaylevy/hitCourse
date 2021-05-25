@@ -56,6 +56,8 @@ def login(request):
     else:
         messages.error(request, message="Login Failed")
         # Return an 'invalid login' error message.
+    return render(request, 'users/login.html')
+
 
 # class LoginFormView(SuccessMessageMixin, LoginView):
 #     template_name = 'users/login.html'
