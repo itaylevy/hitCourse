@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth import authenticate, login
 
 
 def register(request):
@@ -43,7 +44,20 @@ def profile(request):
     return render(request, 'users/profile.html', context)
 
 
-class LoginFormView(SuccessMessageMixin, LoginView):
-    template_name = 'users/login.html'
-    success_url = '/profile'
-    success_message = "You were successfully logged in"
+def login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+        # Redirect to a success page.
+        messages.success(request, '{username} Login successful!'.format(request.POST['username']))
+        return redirect('profile')
+    else:
+        messages.error(request, message="Login Failed")
+        # Return an 'invalid login' error message.
+
+# class LoginFormView(SuccessMessageMixin, LoginView):
+#     template_name = 'users/login.html'
+#     success_url = '/profile'
+#     success_message = "You were successfully logged in"
