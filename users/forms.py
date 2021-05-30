@@ -4,9 +4,6 @@ from django.contrib.auth.views import PasswordChangeView
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.urls import reverse_lazy
-from django.contrib.auth.decorators import login_required
-
-from .models import Profile
 
 
 class PasswordsChangeView(PasswordChangeView):
@@ -38,21 +35,3 @@ class UserEditView(generic.UpdateView):
 
     def get_object(self):
         return self.request.user
-
-
-
-# class UserUpdateForm(forms.ModelForm):
-#     email = forms.EmailField()
-#
-#     class Meta:
-#         model = User
-#         fields = ['username', 'email']
-#
-#
-# class ProfileUpdateForm(forms.ModelForm):
-#     password = forms.PasswordInput()
-#
-#     class Meta:
-#         model = Profile
-#         exclude = ['image']
-#

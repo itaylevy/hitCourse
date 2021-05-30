@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 import django_heroku
 from pathlib import Path
+# from users.validators import UniqueSymbols
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,9 +20,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-#'5ff582e1aae5022d85e81d989dfde094e2da8206f43476fa'
-# SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-ld%md$6&n0px2ar)m@rdz=be0ktwd89ggkwkl&tt^ckz9=xtxd'
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -83,14 +81,6 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'hit',
-    #     'HOST': '127.0.0.1',
-    #     'PORT': '3306',
-    #     'USER': 'root',
-    #     'PASSWORD': 'root',
-    # }
 }
 
 
@@ -113,6 +103,13 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+    {
+        'NAME': 'users.validators.UniqueSymbolsValidator'
+    },
+    {
+        'NAME': 'users.validators.LetterCaseValidator'
+    }
+
 ]
 
 
