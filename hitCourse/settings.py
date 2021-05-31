@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 import django_heroku
 from pathlib import Path
+from users import password
+
 # from users.validators import UniqueSymbols
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,6 +42,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'axes',
+    'django_password_validators',
+    'django_password_validators.password_history',
+]
+
+AUTHENTICATION_BACKENDS = [
+    # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+    'axes.backends.AxesBackend',
+
+    # Django ModelBackend is the default authentication backend.
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware'
 ]
 
 ROOT_URLCONF = 'hitCourse.urls'
@@ -87,30 +101,40 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        'OPTIONS': {
-            'min_length': 10,
-        }
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-    {
-        'NAME': 'users.validators.UniqueSymbolsValidator'
-    },
-    {
-        'NAME': 'users.validators.LetterCaseValidator'
-    }
-
-]
+AUTH_PASSWORD_VALIDATORS = password.PASSWORD_CONFIG
+# [
+#     {
+#         'NAME': 'django_password_validators.password_history.password_validation.UniquePasswordsValidator',
+#         'OPTIONS': {
+#              # How many recently entered passwords matter.
+#              # Passwords out of range are deleted.
+#              # Default: 0 - All passwords entered by the user. All password hashes are stored.
+#             'last_passwords': 3,  # Only the last 5 passwords entered by the user
+#         }
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+#         'OPTIONS': {
+#             'min_length': 10,
+#         }
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+#     },
+#     {
+#         'NAME': 'users.validators.UniqueSymbolsValidator'
+#     },
+#     {
+#         'NAME': 'users.validators.LetterCaseValidator'
+#     }
+#
+# ]
 
 
 # Internationalization
